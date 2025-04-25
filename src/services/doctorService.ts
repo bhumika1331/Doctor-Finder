@@ -10,23 +10,31 @@ export async function fetchDoctors(): Promise<Doctor[]> {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     const data = await response.json();
+    console.log("Raw API data:", data);
     
     // Transform the data to match our Doctor interface
-    return data.map((item: any) => ({
-      id: item.id || String(Math.random()),
-      name: item.name ? String(item.name) : "Unknown Doctor",
-      qualifications: item.qualifications ? String(item.qualifications) : "MBBS",
-      speciality: item.speciality ? String(item.speciality) : "General Physician",
-      experience: Number(item.experience) || 0,
-      location: item.location ? String(item.location) : "Unknown",
-      clinic: item.clinic ? String(item.clinic) : "General Clinic",
-      fees: Number(item.fees) || 500,
-      imageUrl: item.imageUrl ? String(item.imageUrl) : "/placeholder.svg",
-      consultationModes: {
-        videoConsult: Boolean(item.consultationModes?.videoConsult || true),
-        inClinic: Boolean(item.consultationModes?.inClinic || true),
-      },
-    }));
+    return data.map((item: any) => {
+      if (typeof item !== 'object' || item === null) {
+        console.warn("Invalid doctor data item:", item);
+        return null;
+      }
+      
+      return {
+        id: item.id ? String(item.id) : String(Math.random()),
+        name: item.name ? String(item.name) : "Unknown Doctor",
+        qualifications: item.qualifications ? String(item.qualifications) : "MBBS",
+        speciality: item.speciality ? String(item.speciality) : "General Physician",
+        experience: Number(item.experience) || 0,
+        location: item.location ? String(item.location) : "Unknown",
+        clinic: item.clinic ? String(item.clinic) : "General Clinic",
+        fees: Number(item.fees) || 500,
+        imageUrl: item.imageUrl ? String(item.imageUrl) : "/placeholder.svg",
+        consultationModes: {
+          videoConsult: Boolean(item.consultationModes?.videoConsult || true),
+          inClinic: Boolean(item.consultationModes?.inClinic || true),
+        },
+      };
+    }).filter(Boolean) as Doctor[];
   } catch (error) {
     console.error("Error fetching doctors:", error);
     return [];
