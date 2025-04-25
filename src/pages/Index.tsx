@@ -22,6 +22,7 @@ const Index = () => {
       setIsLoading(true);
       try {
         const doctorData = await fetchDoctors();
+        console.log("Fetched doctor data:", doctorData);
         setDoctors(doctorData);
         
         // Extract unique specialties
@@ -44,9 +45,11 @@ const Index = () => {
     if (doctors.length > 0) {
       // Apply filters
       const filtered = filterDoctors(doctors, searchParams);
+      console.log("Filtered doctors:", filtered);
       
       // Apply sorting
       const sorted = sortDoctors(filtered, searchParams.sort);
+      console.log("Sorted doctors:", sorted);
       
       setFilteredDoctors(sorted);
     }
@@ -124,6 +127,18 @@ const Index = () => {
       </main>
     </div>
   );
+  
+  function handleSearch(search: string) {
+    updateSearchParams({ search: search || undefined });
+  }
+  
+  function handleFilterChange(filters: Partial<typeof searchParams>) {
+    updateSearchParams(filters);
+  }
+  
+  function handleSortChange(sort?: 'fees' | 'experience') {
+    updateSearchParams({ sort });
+  }
 };
 
 export default Index;

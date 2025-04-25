@@ -14,17 +14,17 @@ export async function fetchDoctors(): Promise<Doctor[]> {
     // Transform the data to match our Doctor interface
     return data.map((item: any) => ({
       id: item.id || String(Math.random()),
-      name: item.name || "Unknown Doctor",
-      qualifications: item.qualifications || "MBBS",
-      speciality: item.speciality || "General Physician",
-      experience: item.experience || 0,
-      location: item.location || "Unknown",
-      clinic: item.clinic || "General Clinic",
-      fees: item.fees || 500,
-      imageUrl: item.imageUrl || "/placeholder.svg",
+      name: item.name ? String(item.name) : "Unknown Doctor",
+      qualifications: item.qualifications ? String(item.qualifications) : "MBBS",
+      speciality: item.speciality ? String(item.speciality) : "General Physician",
+      experience: Number(item.experience) || 0,
+      location: item.location ? String(item.location) : "Unknown",
+      clinic: item.clinic ? String(item.clinic) : "General Clinic",
+      fees: Number(item.fees) || 500,
+      imageUrl: item.imageUrl ? String(item.imageUrl) : "/placeholder.svg",
       consultationModes: {
-        videoConsult: item.consultationModes?.videoConsult || true,
-        inClinic: item.consultationModes?.inClinic || true,
+        videoConsult: Boolean(item.consultationModes?.videoConsult || true),
+        inClinic: Boolean(item.consultationModes?.inClinic || true),
       },
     }));
   } catch (error) {
