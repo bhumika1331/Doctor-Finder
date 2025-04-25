@@ -8,7 +8,7 @@ export interface Doctor {
   location: string;
   clinic: string;
   fees: number;
-  imageUrl: string;
+  photo: string;
   consultationModes: {
     videoConsult: boolean;
     inClinic: boolean;
