@@ -127,18 +127,6 @@ const Index = () => {
       </main>
     </div>
   );
-  
-  function handleSearch(search: string) {
-    updateSearchParams({ search: search || undefined });
-  }
-  
-  function handleFilterChange(filters: Partial<typeof searchParams>) {
-    updateSearchParams(filters);
-  }
-  
-  function handleSortChange(sort?: 'fees' | 'experience') {
-    updateSearchParams({ sort });
-  }
 };
 
 export default Index;
