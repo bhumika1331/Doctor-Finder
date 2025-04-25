@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,7 +62,11 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				// Add custom colors for doctor finder app
+				'doctor-blue': '#0056b3',
+				'doctor-light-bg': '#f5f7fa',
+				'fee-green': '#27ae60',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
